@@ -728,8 +728,6 @@ def predict():
             'error': str(e)
         })
 
-app = Flask(__name__)
-
 @app.route('/')
 def home():
     return "Welcome to the SA_AKI_Diabetes Clinical Prediction Model!"
@@ -745,3 +743,6 @@ if __name__ == '__main__':
     print(f"📍 Access URL: http://localhost:{port}")
     print("🛑 Stop service: Press Ctrl+C")
     print("=" * 60)
+    
+    # 仅在本地开发环境使用，生产环境由Gunicorn启动
+    app.run(host='0.0.0.0', port=port, debug=False)
