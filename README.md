@@ -4,18 +4,24 @@
 
 A Flask-based web application for clinical risk prediction using the CatBoost machine learning algorithm. The model predicts in-hospital mortality in ICU patients with Sepsis-Associated Acute Kidney Injury and Diabetes comorbidity based on 19 clinical indicators assessed within 24 hours of ICU admission.
 
-## Requirements
+## Quick Start
+
+**Website Deployment:** https://sa-aki-diabetes-prediction.onrender.com
+
+## Local Development
+
+### Requirements
 
 - Python 3.10
 - See `requirements.txt` for detailed dependencies
 
-## Installation
+### Installation
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Usage
+### Usage
 
 ```bash
 python app_flask.py
