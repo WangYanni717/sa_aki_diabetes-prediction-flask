@@ -68,7 +68,7 @@ HTML_TEMPLATE = '''
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CatBoost Clinical Prediction Model</title>
+    <title>SA_AKI_Diabetes Clinical Prediction Model</title>
     <style>
         * {
             margin: 0;
@@ -361,7 +361,7 @@ HTML_TEMPLATE = '''
 <body>
     <div class="container">
         <div class="header">
-            <h1>🏥 CatBoost Clinical Prediction Model</h1>
+            <h1>🏥 SA_AKI_Diabetes Clinical Prediction Model</h1>
             <p>Auxiliary Clinical Risk Assessment System - Machine Learning-based Adverse Event Prediction</p>
         </div>
         
@@ -728,13 +728,23 @@ def predict():
             'error': str(e)
         })
 
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Welcome to the SA_AKI_Diabetes Clinical Prediction Model!"
+
 if __name__ == '__main__':
+    # 获取 Render 提供的端口，如果没有设置，默认为 5001
     port = int(os.environ.get('PORT', 5001))
+
     print("=" * 60)
-    print("🏥 CatBoost Clinical Prediction Model - Flask Server")
+    print("🏥 SA_AKI_Diabetes Clinical Prediction Model - Flask Server")
     print("=" * 60)
     print("✅ Server starting...")
     print(f"📍 Access URL: http://localhost:{port}")
     print("🛑 Stop service: Press Ctrl+C")
     print("=" * 60)
+
+    # 启动 Flask 应用，监听动态端口
     app.run(debug=False, port=port, host='0.0.0.0')
