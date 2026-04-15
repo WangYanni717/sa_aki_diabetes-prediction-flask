@@ -50,7 +50,8 @@ Input clinical values are validated against physiologically reasonable ranges. T
 ├── app_flask.py           # Flask web application
 ├── cat_model.pkl          # Trained CatBoost model
 ├── requirements.txt       # Python dependencies
-├── Procfile              # Deployment configuration
-├── README.md             # This file
-└── .gitignore            # Git ignore file
+├── procfile               # Deployment configuration
+├── runtime.txt            # Python runtime version
+├── README.md              # This file
+└── .gitignore             # Git ignore file
 ```
