@@ -745,6 +745,3 @@ if __name__ == '__main__':
     print(f"📍 Access URL: http://localhost:{port}")
     print("🛑 Stop service: Press Ctrl+C")
     print("=" * 60)
-
-    # 启动 Flask 应用，监听动态端口
-    app.run(debug=False, port=port, host='0.0.0.0')
