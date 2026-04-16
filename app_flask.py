@@ -427,8 +427,8 @@ HTML_TEMPLATE = '''
                                 <input type="number" name="glu_max" value="150" min="0" max="1000" step="1" required>
                             </div>
                             <div class="form-group">
-                                <label>Blood Urea Nitrogen Maximum (mg/dL) <span style="color: #999; font-size: 0.9em">[0-231]</span></label>
-                                <input type="number" name="bun_max" value="20" min="0" max="231" step="1" required>
+                                <label>Blood Urea Nitrogen Maximum (mg/dL) <span style="color: #999; font-size: 0.9em">[0-240]</span></label>
+                                <input type="number" name="bun_max" value="20" min="0" max="240" step="1" required>
                             </div>
                         </div>
                     </div>
