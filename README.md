@@ -1,4 +1,4 @@
-# SA_AKI_Diabetes Clinical Prediction Model
+# SA_AKI_Diabetes In-Hospital Mortality Prediction Model
 
 ## Overview
 
