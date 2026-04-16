@@ -57,7 +57,7 @@ feature_ranges = {
     'max_t': (34, 42),                        # 体温：34-42 ℃
     'pt_max': (0, 100),                       # PT：≤100 s
     'ptt_max': (0, 150),                      # PTT：合理范围
-    'bun_max': (0, 231),                      # 尿素氮：合理范围
+    'bun_max': (0, 240),                      # 尿素氮：合理范围
     'sofa': (0, 24)                           # SOFA评分：0-24分
 }
 
@@ -68,7 +68,7 @@ HTML_TEMPLATE = '''
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SA_AKI_Diabetes Clinical Prediction Model</title>
+    <title>SA_AKI_Diabetes In-Hospital Mortality Prediction Model</title>
     <style>
         * {
             margin: 0;
@@ -361,8 +361,8 @@ HTML_TEMPLATE = '''
 <body>
     <div class="container">
         <div class="header">
-            <h1>🏥 SA_AKI_Diabetes Clinical Prediction Model</h1>
-            <p>Auxiliary Clinical Risk Assessment System - Machine Learning-based Adverse Event Prediction</p>
+            <h1>🏥 SA_AKI_Diabetes In-Hospital Mortality Prediction Model</h1>
+            <p>Auxiliary Clinical Risk Assessment System - Machine Learning-based In-Hospital Mortality Prediction</p>
         </div>
         
         <div class="content">
@@ -513,7 +513,7 @@ HTML_TEMPLATE = '''
         <div class="footer">
             <div class="footer-item">
                 <h4>📋 Model Information</h4>
-                <p>Algorithm: CatBoost<br>Number of Features: 19<br>Purpose: Adverse Event Prediction</p>
+                <p>Algorithm: CatBoost<br>Number of Features: 19<br>Purpose: In-Hospital Mortality Prediction</p>
             </div>
             <div class="footer-item">
                 <h4>⚠️ Disclaimer</h4>
@@ -730,14 +730,14 @@ def predict():
 
 @app.route('/')
 def home():
-    return "Welcome to the SA_AKI_Diabetes Clinical Prediction Model!"
+    return "Welcome to the SA_AKI_Diabetes In-Hospital Mortality Prediction Model!"
 
 if __name__ == '__main__':
     # 获取 Render 提供的端口，如果没有设置，默认为 5001
     port = int(os.environ.get('PORT', 5001))
 
     print("=" * 60)
-    print("🏥 SA_AKI_Diabetes Clinical Prediction Model - Flask Server")
+    print("🏥 SA_AKI_Diabetes In-Hospital Mortality Prediction Model - Flask Server")
     print("=" * 60)
     print("✅ Server starting...")
     print(f"📍 Access URL: http://localhost:{port}")
