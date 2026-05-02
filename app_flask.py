@@ -591,7 +591,7 @@ HTML_TEMPLATE = '''
         <div class="footer">
             <div class="footer-item">
                 <h4>📋 Model Information</h4>
-                <p>Algorithm: CatBoost<br>Number of Features: 19<br>Purpose: In-Hospital Mortality Prediction</p>
+                <p>Algorithm: CatBoost<br>Number of Features: 33<br>Purpose: In-Hospital Mortality Prediction</p>
             </div>
             <div class="footer-item">
                 <h4>⚠️ Disclaimer</h4>
