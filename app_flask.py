@@ -443,8 +443,8 @@ HTML_TEMPLATE = '''
                         <div style="color: #667eea; font-weight: 600; margin-bottom: 15px;">Blood Biochemistry</div>
                         <div class="form-grid">
                             <div class="form-group">
-                                <label>Glucose Minimum (mg/dL) <span style="color: #999; font-size: 0.9em">[0-300]</span></label>
-                                <input type="number" name="glu_min" value="100" min="0" max="300" step="1" required>
+                                <label>Glucose Minimum (mg/dL) <span style="color: #999; font-size: 0.9em">[0-500]</span></label>
+                                <input type="number" name="glu_min" value="100" min="0" max="500" step="1" required>
                             </div>
                             <div class="form-group">
                                 <label>Glucose Maximum (mg/dL) <span style="color: #999; font-size: 0.9em">[0-1000]</span></label>
@@ -463,8 +463,8 @@ HTML_TEMPLATE = '''
                                 <input type="number" name="scr_max" value="1" min="0" max="10" step="0.1" required>
                             </div>
                             <div class="form-group">
-                                <label>Anion Gap Maximum (mEq/L) <span style="color: #999; font-size: 0.9em">[0-30]</span></label>
-                                <input type="number" name="ag_max" value="12" min="0" max="30" step="1" required>
+                                <label>Anion Gap Maximum (mEq/L) <span style="color: #999; font-size: 0.9em">[0-50]</span></label>
+                                <input type="number" name="ag_max" value="12" min="0" max="50" step="1" required>
                             </div>
                             <div class="form-group">
                                 <label>Calcium Minimum (mg/dL)</label>
@@ -482,8 +482,8 @@ HTML_TEMPLATE = '''
                                 <input type="number" name="ph_min" value="7.35" min="6.8" max="7.8" step="0.01" required>
                             </div>
                             <div class="form-group">
-                                <label>PO2 Minimum (mmHg) <span style="color: #999; font-size: 0.9em">[30-150]</span></label>
-                                <input type="number" name="po2_min" value="80" min="30" max="150" step="1" required>
+                                <label>PO2 Minimum (mmHg) <span style="color: #999; font-size: 0.9em">[0-300]</span></label>
+                                <input type="number" name="po2_min" value="80" min="0" max="300" step="1" required>
                             </div>
                             <div class="form-group">
                                 <label>PCO2 Maximum (mmHg)</label>
@@ -516,36 +516,36 @@ HTML_TEMPLATE = '''
                                 <input type="number" name="min_hr" value="70" min="20" max="140" step="1" required>
                             </div>
                             <div class="form-group">
-                                <label>Heart Rate Maximum (bpm) <span style="color: #999; font-size: 0.9em">[40-200]</span></label>
-                                <input type="number" name="max_hr" value="100" min="40" max="200" step="1" required>
+                                <label>Heart Rate Maximum (bpm) <span style="color: #999; font-size: 0.9em">[20-200]</span></label>
+                                <input type="number" name="max_hr" value="100" min="20" max="200" step="1" required>
                             </div>
                             <div class="form-group">
                                 <label>Temperature Maximum (℃) <span style="color: #999; font-size: 0.9em">[34-42]</span></label>
                                 <input type="number" name="max_t" value="37" min="34" max="42" step="0.1" required>
                             </div>
                             <div class="form-group">
-                                <label>Temperature Minimum (℃) <span style="color: #999; font-size: 0.9em">[32-40]</span></label>
-                                <input type="number" name="min_t" value="36.5" min="32" max="40" step="0.1" required>
+                                <label>Temperature Minimum (℃) <span style="color: #999; font-size: 0.9em">[30-42]</span></label>
+                                <input type="number" name="min_t" value="36.5" min="30" max="42" step="0.1" required>
                             </div>
                             <div class="form-group">
                                 <label>Oxygen Saturation Minimum (%) <span style="color: #999; font-size: 0.9em">[40-100]</span></label>
                                 <input type="number" name="min_spo2" value="95" min="40" max="100" step="0.1" required>
                             </div>
                             <div class="form-group">
-                                <label>Systolic Blood Pressure Min (mmHg) <span style="color: #999; font-size: 0.9em">[0-200]</span></label>
-                                <input type="number" name="min_nsbp" value="110" min="0" max="200" step="1" required>
+                                <label>Systolic Blood Pressure Min (mmHg) <span style="color: #999; font-size: 0.9em">[0-220]</span></label>
+                                <input type="number" name="min_nsbp" value="110" min="0" max="220" step="1" required>
                             </div>
                             <div class="form-group">
                                 <label>Diastolic Blood Pressure Min (mmHg) <span style="color: #999; font-size: 0.9em">[0-120]</span></label>
                                 <input type="number" name="min_ndbp" value="60" min="0" max="120" step="1" required>
                             </div>
                             <div class="form-group">
-                                <label>Respiratory Rate Maximum (rpm) <span style="color: #999; font-size: 0.9em">[5-50]</span></label>
-                                <input type="number" name="max_rr" value="20" min="5" max="50" step="1" required>
+                                <label>Respiratory Rate Maximum (rpm) <span style="color: #999; font-size: 0.9em">[5-80]</span></label>
+                                <input type="number" name="max_rr" value="20" min="5" max="80" step="1" required>
                             </div>
                             <div class="form-group">
-                                <label>Respiratory Rate Minimum (rpm) <span style="color: #999; font-size: 0.9em">[5-50]</span></label>
-                                <input type="number" name="min_rr" value="16" min="5" max="50" step="1" required>
+                                <label>Respiratory Rate Minimum (rpm) <span style="color: #999; font-size: 0.9em">[2-40]</span></label>
+                                <input type="number" name="min_rr" value="16" min="2" max="40" step="1" required>
                             </div>
                         </div>
                     </div>
@@ -559,7 +559,7 @@ HTML_TEMPLATE = '''
                                 <input type="number" name="norepinephrine_rate" value="0" min="0" max="2" step="0.1" required>
                             </div>
                             <div class="form-group">
-                                <label>SOFA Score</label>
+                                <label>SOFA Score<span style="color: #999; font-size: 0.9em">[0-24]</span></label>
                                 <input type="number" name="sofa" value="0" min="0" max="24" step="1" required>
                             </div>
                         </div>
