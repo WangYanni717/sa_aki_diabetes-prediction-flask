@@ -33,32 +33,40 @@ for model_path in MODEL_PATHS:
 if model is None:
     print("❌ Model loading failed: no valid model file found")
 
-# Feature list
-feature_names = ['uo_ml_kg_24h', 'balance', 'plt_min', 'lac_max', 'weight', 'pt_max', 
-                 'glu_max', 'ph_min', 'sofa', 'rdw_max', 'min_ndbp', 'bun_max', 
-                 'norepinephrine_rate', 'wbc_max', 'min_hr', 'max_t', 'min_spo2', 'ptt_max', 'age']
+# Feature list (从训练脚本中同步的特征列表)
+feature_names = ['uo_ml_kg_24h', 'balance', 'plt_min', 'lac_max', 'glu_min', 'rdw_max', 'weight', 'sofa', 
+                 'min_ndbp', 'pt_max', 'bun_max', 'ph_min', 'ptt_max', 'max_t', 'max_hr', 'norepinephrine_rate', 
+                 'min_spo2', 'po2_min', 'min_nsbp', 'min_hr', 'wbc_max', 'ag_max', 'glu_max', 
+                 'mchc_max', 'age', 'hgb_max', 'max_rr', 'min_t', 'scr_max', 'mch_max', 'pco2_max', 'ca_min', 'min_rr']
 
 # Feature data range constraints (based on training data outlier handling)
+# 范围定义参考自 R 数据处理代码 - 仅包含有明确定义范围的变量
 feature_ranges = {
-    'age': (0, 90),                          # 年龄：0-120岁
+    'age': (0, 90),                          # 年龄：>89 映射到 90
     'weight': (30, 200),                      # 体重：30-200 kg
     'uo_ml_kg_24h': (0, 70),                  # 尿输出：0-70 ml/kg/24h
     'balance': (-8000, 10000),                # 液体平衡：-8000 到 10000 ml
-    'plt_min': (0, 800),                      # 血小板：≤800 ×10⁹/L
-    'lac_max': (0, 20),                       # 乳酸：≤20 mmol/L
-    'glu_max': (0, 1000),                     # 血糖：≤1000 mg/dL
-    'wbc_max': (0, 100),                      # 白细胞：≤100 ×10⁹/L
-    'rdw_max': (0, 30),                       # RDW：≤30 %
-    'ph_min': (6.8, 7.8),                     # pH：6.8-7.8
+    'min_hr': (20, 140),                      # 心率最小值：20-140 bpm
+    'max_hr': (20, 200),                      # 心率最大值：20-200 bpm
+    'min_nsbp': (0, 220),                     # 收缩压最小值：>0-220 mmHg
+    'min_ndbp': (0, 120),                     # 舒张压最小值：>0-120 mmHg
+    'max_rr': (5, 80),                        # 呼吸频率最大值：5-80 次/分
+    'min_rr': (2, 40),                        # 呼吸频率最小值：2-40 次/分
+    'min_spo2': (40, 100),                    # 血氧饱和度最小值：40-100%
+    'max_t': (34, 42),                        # 体温最大值：34-42 ℃
+    'min_t': (30, 42),                        # 体温最小值：30-42 ℃
+    'plt_min': (0, 800),                      # 血小板最小值：≤800 ×10⁹/L
+    'lac_max': (0, 20),                       # 乳酸最大值：≤20 mmol/L
+    'glu_max': (0, 1000),                     # 血糖最大值：≤1000 mg/dL
+    'glu_min': (0, 500),                      # 血糖最小值：≤500 mg/dL
+    'rdw_max': (0, 30),                       # RDW最大值：≤30 %
+    'ph_min': (6.8, 7.8),                     # pH最小值：6.8-7.8
     'norepinephrine_rate': (0, 2),            # 去甲肾上腺素：≤2 μg/kg/min
-    'min_ndbp': (0, 120),                     # 舒张压：0-120 mmHg
-    'min_spo2': (40, 100),                    # 血氧饱和度：40-100%
-    'min_hr': (20, 140),                      # 心率：20-140 bpm
-    'max_t': (34, 42),                        # 体温：34-42 ℃
-    'pt_max': (0, 100),                       # PT：≤100 s
-    'ptt_max': (0, 150),                      # PTT：合理范围
-    'bun_max': (0, 240),                      # 尿素氮：合理范围
-    'sofa': (0, 24)                           # SOFA评分：0-24分
+    'po2_min': (0, 300),                      # 血氧分压最小值：≤300 mmHg
+    'wbc_max': (0, 100),                      # 白细胞最大值：≤100 ×10⁹/L
+    'ag_max': (0, 50),                        # 阴离子间隙最大值：≤50 mEq/L
+    'pt_max': (0, 100),                       # 凝血酶原时间最大值：≤100 s
+    'scr_max': (0, 10),                       # 血肌酐最大值：≤10 mg/dL
 }
 
 # HTML frontend template
@@ -372,6 +380,7 @@ HTML_TEMPLATE = '''
                     <strong>📌 Note:</strong> Please enter patient clinical values within 24 hours after ICU admission
                 </div>
                 <form id="predictionForm">
+                    <!-- 基本信息 -->
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Age (years) <span style="color: #999; font-size: 0.9em">[0-90]</span></label>
@@ -383,6 +392,7 @@ HTML_TEMPLATE = '''
                         </div>
                     </div>
                     
+                    <!-- 液体输出和平衡 -->
                     <div style="margin-top: 25px; padding-top: 20px; border-top: 2px solid #e0e0e0;">
                         <div style="color: #667eea; font-weight: 600; margin-bottom: 15px;">Urine Output and Fluid Balance</div>
                         <div class="form-grid">
@@ -397,6 +407,7 @@ HTML_TEMPLATE = '''
                         </div>
                     </div>
                     
+                    <!-- 血液学指标 -->
                     <div style="margin-top: 25px; padding-top: 20px; border-top: 2px solid #e0e0e0;">
                         <div style="color: #667eea; font-weight: 600; margin-bottom: 15px;">Hematology Indicators</div>
                         <div class="form-grid">
@@ -409,32 +420,81 @@ HTML_TEMPLATE = '''
                                 <input type="number" name="wbc_max" value="10" min="0" max="100" step="0.1" required>
                             </div>
                             <div class="form-group">
-                                <label>Red Cell Distribution Width (%) <span style="color: #999; font-size: 0.9em">[0-30]</span></label>
+                                <label>Red Cell Distribution Width Max (%) <span style="color: #999; font-size: 0.9em">[0-30]</span></label>
                                 <input type="number" name="rdw_max" value="13" min="0" max="30" step="0.1" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Hemoglobin Maximum (g/dL) <span style="color: #999; font-size: 0.9em">[5-20]</span></label>
+                                <input type="number" name="hgb_max" value="14" min="5" max="20" step="0.1" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Mean Corpuscular Hemoglobin Max (pg) <span style="color: #999; font-size: 0.9em">[20-35]</span></label>
+                                <input type="number" name="mch_max" value="28" min="20" max="35" step="0.1" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Mean Corpuscular Hemoglobin Conc. Max (g/dL) <span style="color: #999; font-size: 0.9em">[30-37]</span></label>
+                                <input type="number" name="mchc_max" value="33" min="30" max="37" step="0.1" required>
                             </div>
                         </div>
                     </div>
                     
+                    <!-- 血生化 -->
                     <div style="margin-top: 25px; padding-top: 20px; border-top: 2px solid #e0e0e0;">
                         <div style="color: #667eea; font-weight: 600; margin-bottom: 15px;">Blood Biochemistry</div>
                         <div class="form-grid">
                             <div class="form-group">
-                                <label>Lactate Maximum (mmol/L) <span style="color: #999; font-size: 0.9em">[0-20]</span></label>
-                                <input type="number" name="lac_max" value="1" min="0" max="20" step="0.1" required>
+                                <label>Glucose Minimum (mg/dL) <span style="color: #999; font-size: 0.9em">[0-300]</span></label>
+                                <input type="number" name="glu_min" value="100" min="0" max="300" step="1" required>
                             </div>
                             <div class="form-group">
                                 <label>Glucose Maximum (mg/dL) <span style="color: #999; font-size: 0.9em">[0-1000]</span></label>
                                 <input type="number" name="glu_max" value="150" min="0" max="1000" step="1" required>
                             </div>
                             <div class="form-group">
+                                <label>Lactate Maximum (mmol/L) <span style="color: #999; font-size: 0.9em">[0-20]</span></label>
+                                <input type="number" name="lac_max" value="1" min="0" max="20" step="0.1" required>
+                            </div>
+                            <div class="form-group">
                                 <label>Blood Urea Nitrogen Maximum (mg/dL) <span style="color: #999; font-size: 0.9em">[0-240]</span></label>
                                 <input type="number" name="bun_max" value="20" min="0" max="240" step="1" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Serum Creatinine Maximum (mg/dL) <span style="color: #999; font-size: 0.9em">[0-10]</span></label>
+                                <input type="number" name="scr_max" value="1" min="0" max="10" step="0.1" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Anion Gap Maximum (mEq/L) <span style="color: #999; font-size: 0.9em">[0-30]</span></label>
+                                <input type="number" name="ag_max" value="12" min="0" max="30" step="1" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Calcium Minimum (mg/dL) <span style="color: #999; font-size: 0.9em">[6-10]</span></label>
+                                <input type="number" name="ca_min" value="8.5" min="6" max="10" step="0.1" required>
                             </div>
                         </div>
                     </div>
                     
+                    <!-- 血气和酸碱 -->
                     <div style="margin-top: 25px; padding-top: 20px; border-top: 2px solid #e0e0e0;">
-                        <div style="color: #667eea; font-weight: 600; margin-bottom: 15px;">Coagulation and Acid-Base</div>
+                        <div style="color: #667eea; font-weight: 600; margin-bottom: 15px;">Arterial Blood Gas and Acid-Base</div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>pH Minimum <span style="color: #999; font-size: 0.9em">[6.8-7.8]</span></label>
+                                <input type="number" name="ph_min" value="7.35" min="6.8" max="7.8" step="0.01" required>
+                            </div>
+                            <div class="form-group">
+                                <label>PO2 Minimum (mmHg) <span style="color: #999; font-size: 0.9em">[30-150]</span></label>
+                                <input type="number" name="po2_min" value="80" min="30" max="150" step="1" required>
+                            </div>
+                            <div class="form-group">
+                                <label>PCO2 Maximum (mmHg) <span style="color: #999; font-size: 0.9em">[20-90]</span></label>
+                                <input type="number" name="pco2_max" value="45" min="20" max="90" step="1" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 凝血指标 -->
+                    <div style="margin-top: 25px; padding-top: 20px; border-top: 2px solid #e0e0e0;">
+                        <div style="color: #667eea; font-weight: 600; margin-bottom: 15px;">Coagulation Studies</div>
                         <div class="form-grid">
                             <div class="form-group">
                                 <label>Prothrombin Time Maximum (s) <span style="color: #999; font-size: 0.9em">[0-100]</span></label>
@@ -444,13 +504,10 @@ HTML_TEMPLATE = '''
                                 <label>Partial Thromboplastin Time Maximum (s) <span style="color: #999; font-size: 0.9em">[0-150]</span></label>
                                 <input type="number" name="ptt_max" value="30" min="0" max="150" step="0.1" required>
                             </div>
-                            <div class="form-group">
-                                <label>pH Minimum <span style="color: #999; font-size: 0.9em">[6.8-7.8]</span></label>
-                                <input type="number" name="ph_min" value="7.35" min="6.8" max="7.8" step="0.01" required>
-                            </div>
                         </div>
                     </div>
                     
+                    <!-- 生命体征 -->
                     <div style="margin-top: 25px; padding-top: 20px; border-top: 2px solid #e0e0e0;">
                         <div style="color: #667eea; font-weight: 600; margin-bottom: 15px;">Vital Signs</div>
                         <div class="form-grid">
@@ -459,22 +516,43 @@ HTML_TEMPLATE = '''
                                 <input type="number" name="min_hr" value="70" min="20" max="140" step="1" required>
                             </div>
                             <div class="form-group">
+                                <label>Heart Rate Maximum (bpm) <span style="color: #999; font-size: 0.9em">[40-200]</span></label>
+                                <input type="number" name="max_hr" value="100" min="40" max="200" step="1" required>
+                            </div>
+                            <div class="form-group">
                                 <label>Temperature Maximum (℃) <span style="color: #999; font-size: 0.9em">[34-42]</span></label>
                                 <input type="number" name="max_t" value="37" min="34" max="42" step="0.1" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Temperature Minimum (℃) <span style="color: #999; font-size: 0.9em">[32-40]</span></label>
+                                <input type="number" name="min_t" value="36.5" min="32" max="40" step="0.1" required>
                             </div>
                             <div class="form-group">
                                 <label>Oxygen Saturation Minimum (%) <span style="color: #999; font-size: 0.9em">[40-100]</span></label>
                                 <input type="number" name="min_spo2" value="95" min="40" max="100" step="0.1" required>
                             </div>
                             <div class="form-group">
-                                <label>Diastolic Blood Pressure Minimum (mmHg) <span style="color: #999; font-size: 0.9em">[0-120]</span></label>
+                                <label>Systolic Blood Pressure Min (mmHg) <span style="color: #999; font-size: 0.9em">[0-200]</span></label>
+                                <input type="number" name="min_nsbp" value="110" min="0" max="200" step="1" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Diastolic Blood Pressure Min (mmHg) <span style="color: #999; font-size: 0.9em">[0-120]</span></label>
                                 <input type="number" name="min_ndbp" value="60" min="0" max="120" step="1" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Respiratory Rate Maximum (rpm) <span style="color: #999; font-size: 0.9em">[5-50]</span></label>
+                                <input type="number" name="max_rr" value="20" min="5" max="50" step="1" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Respiratory Rate Minimum (rpm) <span style="color: #999; font-size: 0.9em">[5-50]</span></label>
+                                <input type="number" name="min_rr" value="16" min="5" max="50" step="1" required>
                             </div>
                         </div>
                     </div>
                     
+                    <!-- 用药和评分 -->
                     <div style="margin-top: 25px; padding-top: 20px; border-top: 2px solid #e0e0e0;">
-                        <div style="color: #667eea; font-weight: 600; margin-bottom: 15px;">Medications and Scoring</div>
+                        <div style="color: #667eea; font-weight: 600; margin-bottom: 15px;">Medications and Clinical Scoring</div>
                         <div class="form-grid">
                             <div class="form-group">
                                 <label>Norepinephrine Dose (μg/kg/min) <span style="color: #999; font-size: 0.9em">[0-2]</span></label>
@@ -696,7 +774,7 @@ def predict():
         pred_proba = model.predict_proba(input_df)[0]
         risk_score = float(pred_proba[1])
         
-        # Identify risk factors
+        # Identify risk factors (风险因素识别)
         risk_indicators = []
         if data.get('sofa', 0) > 6:
             risk_indicators.append("🔴 High SOFA score (>6)")
@@ -708,12 +786,30 @@ def predict():
             risk_indicators.append("🔴 Low oxygen saturation (<90%)")
         if data.get('ph_min', 7.35) < 7.25:
             risk_indicators.append("🔴 Significant pH decrease (<7.25)")
+        if data.get('po2_min', 80) < 60:
+            risk_indicators.append("🔴 Low PO2 (<60 mmHg)")
+        if data.get('pco2_max', 45) > 55:
+            risk_indicators.append("🟠 Elevated PCO2 (>55 mmHg)")
         if data.get('norepinephrine_rate', 0) > 0.5:
             risk_indicators.append("🟠 High-dose norepinephrine required (>0.5 μg/kg/min)")
         if data.get('pt_max', 0) > 18:
             risk_indicators.append("🟠 Prolonged prothrombin time (>18s)")
+        if data.get('ptt_max', 0) > 45:
+            risk_indicators.append("🟠 Prolonged partial thromboplastin time (>45s)")
         if data.get('bun_max', 0) > 50:
             risk_indicators.append("🟠 Elevated blood urea nitrogen (>50 mg/dL)")
+        if data.get('scr_max', 0) > 2.0:
+            risk_indicators.append("🟠 Elevated serum creatinine (>2.0 mg/dL)")
+        if data.get('wbc_max', 0) > 15:
+            risk_indicators.append("🟠 High WBC count (>15×10⁹/L)")
+        if data.get('glu_max', 0) > 250:
+            risk_indicators.append("🟠 Elevated glucose (>250 mg/dL)")
+        if data.get('min_ndbp', 0) < 55:
+            risk_indicators.append("🔴 Hypotension - Low diastolic BP (<55 mmHg)")
+        if data.get('min_nsbp', 0) < 90:
+            risk_indicators.append("🔴 Hypotension - Low systolic BP (<90 mmHg)")
+        if data.get('uo_ml_kg_24h', 0) < 0.5:
+            risk_indicators.append("🔴 Severe oliguria (<0.5 ml/kg/24h)")
         
         return jsonify({
             'success': True,
