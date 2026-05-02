@@ -424,16 +424,16 @@ HTML_TEMPLATE = '''
                                 <input type="number" name="rdw_max" value="13" min="0" max="30" step="0.1" required>
                             </div>
                             <div class="form-group">
-                                <label>Hemoglobin Maximum (g/dL) <span style="color: #999; font-size: 0.9em">[5-20]</span></label>
-                                <input type="number" name="hgb_max" value="14" min="5" max="20" step="0.1" required>
+                                <label>Hemoglobin Maximum (g/dL)</label>
+                                <input type="number" name="hgb_max" value="14" step="0.1" required>
                             </div>
                             <div class="form-group">
-                                <label>Mean Corpuscular Hemoglobin Max (pg) <span style="color: #999; font-size: 0.9em">[20-35]</span></label>
-                                <input type="number" name="mch_max" value="28" min="20" max="35" step="0.1" required>
+                                <label>Mean Corpuscular Hemoglobin Max (pg)</label>
+                                <input type="number" name="mch_max" value="28" step="0.1" required>
                             </div>
                             <div class="form-group">
-                                <label>Mean Corpuscular Hemoglobin Conc. Max (g/dL) <span style="color: #999; font-size: 0.9em">[30-37]</span></label>
-                                <input type="number" name="mchc_max" value="33" min="30" max="37" step="0.1" required>
+                                <label>Mean Corpuscular Hemoglobin Conc. Max (g/dL)</label>
+                                <input type="number" name="mchc_max" value="33" step="0.1" required>
                             </div>
                         </div>
                     </div>
@@ -455,8 +455,8 @@ HTML_TEMPLATE = '''
                                 <input type="number" name="lac_max" value="1" min="0" max="20" step="0.1" required>
                             </div>
                             <div class="form-group">
-                                <label>Blood Urea Nitrogen Maximum (mg/dL) <span style="color: #999; font-size: 0.9em">[0-240]</span></label>
-                                <input type="number" name="bun_max" value="20" min="0" max="240" step="1" required>
+                                <label>Blood Urea Nitrogen Maximum (mg/dL)</label>
+                                <input type="number" name="bun_max" value="20" step="1" required>
                             </div>
                             <div class="form-group">
                                 <label>Serum Creatinine Maximum (mg/dL) <span style="color: #999; font-size: 0.9em">[0-10]</span></label>
@@ -467,8 +467,8 @@ HTML_TEMPLATE = '''
                                 <input type="number" name="ag_max" value="12" min="0" max="30" step="1" required>
                             </div>
                             <div class="form-group">
-                                <label>Calcium Minimum (mg/dL) <span style="color: #999; font-size: 0.9em">[6-10]</span></label>
-                                <input type="number" name="ca_min" value="8.5" min="6" max="10" step="0.1" required>
+                                <label>Calcium Minimum (mg/dL)</label>
+                                <input type="number" name="ca_min" value="8.5" step="0.1" required>
                             </div>
                         </div>
                     </div>
@@ -486,8 +486,8 @@ HTML_TEMPLATE = '''
                                 <input type="number" name="po2_min" value="80" min="30" max="150" step="1" required>
                             </div>
                             <div class="form-group">
-                                <label>PCO2 Maximum (mmHg) <span style="color: #999; font-size: 0.9em">[20-90]</span></label>
-                                <input type="number" name="pco2_max" value="45" min="20" max="90" step="1" required>
+                                <label>PCO2 Maximum (mmHg)</label>
+                                <input type="number" name="pco2_max" value="45" step="1" required>
                             </div>
                         </div>
                     </div>
@@ -501,8 +501,8 @@ HTML_TEMPLATE = '''
                                 <input type="number" name="pt_max" value="13" min="0" max="100" step="0.1" required>
                             </div>
                             <div class="form-group">
-                                <label>Partial Thromboplastin Time Maximum (s) <span style="color: #999; font-size: 0.9em">[0-150]</span></label>
-                                <input type="number" name="ptt_max" value="30" min="0" max="150" step="0.1" required>
+                                <label>Partial Thromboplastin Time Maximum (s)</label>
+                                <input type="number" name="ptt_max" value="30" step="0.1" required>
                             </div>
                         </div>
                     </div>
@@ -559,7 +559,7 @@ HTML_TEMPLATE = '''
                                 <input type="number" name="norepinephrine_rate" value="0" min="0" max="2" step="0.1" required>
                             </div>
                             <div class="form-group">
-                                <label>SOFA Score <span style="color: #999; font-size: 0.9em">[0-24]</span></label>
+                                <label>SOFA Score</label>
                                 <input type="number" name="sofa" value="0" min="0" max="24" step="1" required>
                             </div>
                         </div>
