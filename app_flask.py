@@ -34,10 +34,10 @@ if model is None:
     print("❌ Model loading failed: no valid model file found")
 
 # Feature list (从训练脚本中同步的特征列表)
-feature_names = ['uo_ml_kg_24h', 'balance', 'plt_min', 'lac_max', 'glu_min', 'rdw_max', 'weight', 'sofa', 
-                 'min_ndbp', 'pt_max', 'bun_max', 'ph_min', 'ptt_max', 'max_t', 'max_hr', 'norepinephrine_rate', 
-                 'min_spo2', 'po2_min', 'min_nsbp', 'min_hr', 'wbc_max', 'ag_max', 'glu_max', 
-                 'mchc_max', 'age', 'hgb_max', 'max_rr', 'min_t', 'scr_max', 'mch_max', 'pco2_max', 'ca_min', 'min_rr']
+feature_names = ['uo_ml_kg_24h', 'balance', 'plt_min', 'lac_max', 'pt_max', 'weight', 'glu_max',
+                 'sofa', 'rdw_max', 'ph_min', 'min_ndbp', 'bun_max', 'min_hr', 'wbc_max', 'min_spo2', 'norepinephrine_rate', 
+                 'ptt_max', 'glu_min', 'max_t', 'min_nsbp', 'mchc_max', 'age', 'ag_max', 'hgb_max', 'min_t', 'max_rr', 'mch_max', 
+                 'po2_min', 'scr_max', 'min_rr', 'k_max', 'ca_min']
 
 # Feature data range constraints (based on training data outlier handling)
 # 范围定义参考自 R 数据处理代码 - 仅包含有明确定义范围的变量
@@ -47,7 +47,6 @@ feature_ranges = {
     'uo_ml_kg_24h': (0, 70),                  # 尿输出：0-70 ml/kg/24h
     'balance': (-8000, 10000),                # 液体平衡：-8000 到 10000 ml
     'min_hr': (20, 140),                      # 心率最小值：20-140 bpm
-    'max_hr': (20, 200),                      # 心率最大值：20-200 bpm
     'min_nsbp': (0, 220),                     # 收缩压最小值：>0-220 mmHg
     'min_ndbp': (0, 120),                     # 舒张压最小值：>0-120 mmHg
     'max_rr': (5, 80),                        # 呼吸频率最大值：5-80 次/分
@@ -486,8 +485,8 @@ HTML_TEMPLATE = '''
                                 <input type="number" name="po2_min" value="80" min="0" max="300" step="1" required>
                             </div>
                             <div class="form-group">
-                                <label>PCO2 Maximum (mmHg)</label>
-                                <input type="number" name="pco2_max" value="45" step="1" required>
+                                <label>Potassium Maximum (mmol/L)</label>
+                                <input type="number" name="k_max" value="5" step="0.1" required>
                             </div>
                         </div>
                     </div>
@@ -514,10 +513,6 @@ HTML_TEMPLATE = '''
                             <div class="form-group">
                                 <label>Heart Rate Minimum (bpm) <span style="color: #999; font-size: 0.9em">[20-140]</span></label>
                                 <input type="number" name="min_hr" value="70" min="20" max="140" step="1" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Heart Rate Maximum (bpm) <span style="color: #999; font-size: 0.9em">[20-200]</span></label>
-                                <input type="number" name="max_hr" value="100" min="20" max="200" step="1" required>
                             </div>
                             <div class="form-group">
                                 <label>Temperature Maximum (℃) <span style="color: #999; font-size: 0.9em">[34-42]</span></label>
@@ -591,7 +586,7 @@ HTML_TEMPLATE = '''
         <div class="footer">
             <div class="footer-item">
                 <h4>📋 Model Information</h4>
-                <p>Algorithm: CatBoost<br>Number of Features: 33<br>Purpose: In-Hospital Mortality Prediction</p>
+                <p>Algorithm: CatBoost<br>Number of Features: 32<br>Purpose: In-Hospital Mortality Prediction</p>
             </div>
             <div class="footer-item">
                 <h4>⚠️ Disclaimer</h4>
@@ -788,8 +783,8 @@ def predict():
             risk_indicators.append("🔴 Significant pH decrease (<7.25)")
         if data.get('po2_min', 80) < 60:
             risk_indicators.append("🔴 Low PO2 (<60 mmHg)")
-        if data.get('pco2_max', 45) > 55:
-            risk_indicators.append("🟠 Elevated PCO2 (>55 mmHg)")
+        if data.get('k_max', 5) > 6:
+            risk_indicators.append("🟠 Elevated Potassium (>6 mmol/L)")
         if data.get('norepinephrine_rate', 0) > 0.5:
             risk_indicators.append("🟠 High-dose norepinephrine required (>0.5 μg/kg/min)")
         if data.get('pt_max', 0) > 18:
