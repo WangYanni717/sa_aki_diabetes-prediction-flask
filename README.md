@@ -32,7 +32,7 @@ Access the application at `http://localhost:5001` in your web browser.
 ## Model Specifications
 
 - **Algorithm**: CatBoost (Categorical Boosting)
-- **Input Features**: 19 clinical indicators including:
+- **Input Features**: 32 clinical indicators including:
   - Vital signs (heart rate, blood oxygen saturation, body temperature, diastolic pressure)
   - Laboratory values (platelets, white blood cells, red cell distribution width, lactate, glucose, blood urea nitrogen)
   - Hemostasis markers (prothrombin time, partial thromboplastin time, pH)
