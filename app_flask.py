@@ -102,32 +102,32 @@ HTML_TEMPLATE = '''
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 50px 20px;
+            padding: 30px 20px;
             text-align: center;
         }
         
         .header h1 {
-            font-size: 2.8em;
+            font-size: 1.8em;
             margin-bottom: 10px;
             font-weight: 700;
         }
         
         .header p {
-            font-size: 1.2em;
+            font-size: 0.9em;
             opacity: 0.95;
         }
         
         .content {
             display: grid;
             grid-template-columns: 1.2fr 1fr;
-            gap: 30px;
-            padding: 50px;
+            gap: 20px;
+            padding: 30px;
         }
         
         .form-section h2 {
             color: #333;
-            margin-bottom: 25px;
-            font-size: 1.5em;
+            margin-bottom: 15px;
+            font-size: 1.1em;
             border-bottom: 3px solid #667eea;
             padding-bottom: 10px;
         }
@@ -148,7 +148,7 @@ HTML_TEMPLATE = '''
         .form-group label {
             font-weight: 600;
             color: #333;
-            font-size: 0.95em;
+            font-size: 0.85em;
         }
         
         .form-group input {
@@ -200,15 +200,15 @@ HTML_TEMPLATE = '''
         
         .result-section h2 {
             color: #333;
-            margin-bottom: 25px;
-            font-size: 1.5em;
+            margin-bottom: 15px;
+            font-size: 1.1em;
             border-bottom: 3px solid #667eea;
             padding-bottom: 10px;
         }
         
         .result-card {
             background: #f8f9fa;
-            padding: 25px;
+            padding: 20px;
             border-radius: 10px;
             border-left: 5px solid #667eea;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
@@ -216,24 +216,24 @@ HTML_TEMPLATE = '''
         
         .result-card h3 {
             color: #333;
-            margin-bottom: 15px;
-            font-size: 1.1em;
+            margin-bottom: 10px;
+            font-size: 0.95em;
         }
         
         .risk-score {
-            font-size: 3.5em;
+            font-size: 2.2em;
             font-weight: 700;
             color: #667eea;
             text-align: center;
-            margin: 20px 0;
+            margin: 15px 0;
         }
         
         .risk-level {
-            font-size: 1.3em;
+            font-size: 1em;
             text-align: center;
-            padding: 20px;
+            padding: 12px;
             border-radius: 10px;
-            margin: 15px 0;
+            margin: 10px 0;
             font-weight: 600;
             transition: all 0.3s;
         }
@@ -258,32 +258,34 @@ HTML_TEMPLATE = '''
         
         .clinical-advice {
             background: white;
-            padding: 20px;
+            padding: 15px;
             border-radius: 8px;
-            line-height: 1.8;
+            line-height: 1.6;
             color: #555;
-            font-size: 0.95em;
+            font-size: 0.85em;
             border: 1px solid #e0e0e0;
         }
         
         .risk-indicators {
             background: #f0f4ff;
-            padding: 20px;
+            padding: 15px;
             border-radius: 8px;
             border-left: 4px solid #667eea;
         }
         
         .risk-indicators h4 {
             color: #333;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+            font-size: 0.95em;
         }
         
         .indicator-item {
-            padding: 8px 12px;
-            margin: 8px 0;
+            padding: 6px 10px;
+            margin: 6px 0;
             border-radius: 5px;
             background: white;
             border-left: 3px solid #ff6b6b;
+            font-size: 0.85em;
         }
         
         .indicator-item.warning {
